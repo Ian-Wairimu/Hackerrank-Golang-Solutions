@@ -2,33 +2,35 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 )
 
 // "abcdefghijklmnopqrstuvwxyz"
 
 func main() {
-	s := "aaabccddd"
-	remove(s)
-	newString := ""
-	visited := make(map[string]int32)
-	for _, v := range s {
-		visited[string(v)]++
-	}
-	for i := 0; i < len(s); i++ {
-		if visited[string(s[i])] > 1 {
-			ch := strings.Trim(s, string(s[i]))
-			continue
-			newString += ch
-		}
-	}
-	fmt.Println(newString)
-}
-func remove(ch string) {
-	str := "a"
-	for i := 0; i < len(ch); i++ {
-		if string(ch[i]) == str {
+	str := "abba"
+	chars := []rune(str)
+	sort.Slice(chars, func(i, j int) bool { //sort the string using the function
+		return chars[i] < chars[j]
+	})
 
+	str = string(chars)
+
+	for i := 0; i < len(str); i += 2 {
+		end := i + 2
+		if end > len(str) {
+			end = len(str)
+		}
+		if strings.Contains(str, str[i:end]) {
+			trim := strings.Trim(str, str[i:end])
+			fmt.Println(trim)
 		}
 	}
+	//fmt.Println(str)
 }
+
+//
+//func remove(ch string) {
+//
+//}
